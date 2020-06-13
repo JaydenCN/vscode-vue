@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="js/layui/css/layui.css" />
+    <title>vue-music</title>
+    <style>
+      input {
+        border-radius: 10px;
+      }
+      .layui-row {
+        margin: 10px auto;
+        width: 700px;
+      }
+      #topDiv {
+        border-radius: 10px;
+        height: 50px;
+      }
+      #searchTopRight {
+        height: 30px;
+        width: 250px;
+        margin-top: 8px;
+      }
+      #searchTopRightBtn {
+        margin-top: 8px;
+      }
+      #searchTopLeft {
+        text-align: center;
+        margin-top: 14px;
+      }
+      #liMusicName {
+        border-radius: 10px;
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      #liMusicContent {
+        border-radius: 10px;
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      #musicPic {
+        border-radius: 10px;
+        height: 400px;
+        width: 350px;
+      }
+      audio {
+        width: 700px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]-->
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <!--[endif]-->
+
+    <fieldset class="layui-elem-field" style="margin-top: 100px;">
+      <legend style="text-align: center;">播放器</legend>
+      <div class="layui-row" id="layuiRow">
+        <h2 style="text-align: center;"></h2>
+        <div id="topDiv" class="layui-col-xs12 layui-bg-blue">
+          <div class="layui-col-xs6" id="top Left">
+            <div class="grid-demo grid-demo-bg1" id="searchTopLeft">
+              <b><i class="layui-icon">&#xe857;</i>Jayden音乐盒</b>
+            </div>
+          </div>
+          <div class="layui-col-xs6">
+            <div class="grid-demo" id="topRight">
+              <input
+                type="text"
+                v-model="keywords"
+                @keyup.enter="musicSearch()"
+                id="searchTopRight"
+                class="layui-input layui-input-inline"
+                placeholder="请输入...(回车)"
+              /><button
+                id="searchTopRightBtn"
+                @click="musicSearch()"
+                class="layui-btn layui-btn-sm layui-btn-normal layui-btn-radius"
+              >
+                <i class="layui-icon">&#xe615;</i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-xs12">
+          <div class="layui-col-xs3">
+            <div id="liMusicName" class="grid-demo layui-bg-cyan">
+              <ul>
+                <li v-for="(item,index) in musicList">
+                  <a href="javascript:;" style="color: aliceblue;" @click="playMusic(item.id)">
+                    🎧&nbsp;&nbsp;&nbsp;{{ item.name}}</a
+                  >
+                  <a
+                    href="javascript:;"
+                    style="float: right;"
+                    v-if="item.mvid!=0"
+                    @click="playMv(item.mvid)"
+                    lay-submit
+                    lay-filter="mvPlay"
+                    >🎬</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="layui-col-xs6">
+            <div class="grid-demo">
+              <div class="layui-anim layui-anim-fadein">
+                <img id="musicPic" :src="pictureUrl" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-xs3">
+            <div class="grid-demo" id="liMusicContent">
+              <h5 style="text-align: center;">热门留言</h5>
+              <div class="layui-card" style="background-color: aliceblue;" v-for="item in hotComments">
+                <div class="layui-card-header">
+                  <img
+                    :src="item.user.avatarUrl"
+                    style="width: 20px; height: 20px; border-radius: 5px;"
+                    alt=""
+                  />&nbsp;&nbsp;<b>{{ item.user.nickname }}</b>
+                </div>
+                <div class="layui-card-body">
+                  {{ item.content }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="layui-vue" style="width: 680px; height: 385px; display: none;">
+          <video id="videoMv" :src="mvUrl" style="width: 680px; height: 385px;" controls></video>
+        </div>
+        <audio id="audioMv" :src="musicUrl" @play="play()" @pause="pause()" controls autoplay loop></audio>
+        <p style="text-align: center;">意见反馈：QQ-2479664280 邮箱-msgboxcn@163.com</p>
+      </div>
+    </fieldset>
+  </body>
+  <script src="./js/layui/layui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/music.js"></script>
+</html>

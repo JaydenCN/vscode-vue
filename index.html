@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>VUE基本使用</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="Jayden-vue">
+			<!-- {{}}:模板语法 -->
+			{{message}}
+			<h2> 姓名：{{ student.name }} </h2></p>
+			<h2> 性别：{{ student.sex }} </h2>
+			<ul>
+				<li> {{campus[0]}} </li>
+				<li> {{campus[1]}} </li>
+				<li> {{campus[2]}} </li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// el：挂载点
+		// data：数据对象
+		var app=new Vue({
+			// 在el元素内及子元素(嵌套其他元素)，data中的数据均可用，el元素之外data数据不可用
+			// el不可挂载body、html标签，不可挂载单标签
+			// 各选择器对vue的el均可用
+			el:"#Jayden-vue",
+			// data中可用复杂语法
+			// 使用时遵循js语法即可
+			data:{
+				message:'Hello Word!',
+				student:{
+					name:'Jayden',
+					sex:'男'
+				},
+				campus:['上海','郑州','北京']
+			}
+		})
+	</script>
+</html>

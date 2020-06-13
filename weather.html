@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="js/layui/css/layui.css" />
+    <title>vue-weather</title>
+    <style>
+      body {
+        text-align: center;
+        background-image: url("./img/weather.jpg");
+        background-size: 100%;
+      }
+      #weatherUl {
+        display: table;
+        margin: 10px auto;
+      }
+      #weatherUl li {
+        color: ghostwhite;
+        border: 1px dotted beige;
+        text-align: center;
+        float: left;
+        *float: none;
+        *display: inline;
+        *zoom: 1;
+        margin: 22px;
+        padding: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="weather">
+      <h1 style="color: aliceblue;">天气预报🌪</h1>
+      <div class="layui-input-inline" style="margin-top: 20px;">
+        <input
+          type="text"
+          v-model="city"
+          class="layui-input layui-input-inline"
+          @keyup.enter="searchWeatherKey"
+          style="width: 200px;"
+          placeholder="请输入城市(支持县城以上)..."
+        />
+        <button class="layui-btn layui-btn-radius" @click="searchWeatherKey">搜索</button>
+        <br />
+        <span class="layui-breadcrumb" lay-separator="|">
+          <a href="javascript:;" @click="address($event.target.innerHTML)" title="上海">上海</a>
+          <a href="javascript:;" @click="address($event.target.innerHTML)">北京</a>
+          <a href="javascript:;" @click="address($event.target.innerHTML)">深圳</a>
+          <a href="javascript:;" @click="address($event.target.innerHTML)">成都</a>
+          <a href="javascript:;" @click="address($event.target.innerHTML)">郑州</a>
+          <a href="javascript:;" @click="address($event.target.innerHTML)">登封</a>
+        </span>
+      </div>
+
+      <ul id="weatherUl">
+        <!-- { "date": "12日星期五", "high": "高温 27℃", "fengli": "<![CDATA[2级]]>", "low": "低温 22℃", "fengxiang": "东北风", "type": "阴" } -->
+        <li v-for="(item,index) in weatherArr" v-show="index<4">
+          <b>
+            <span :title="item.date">{{ item.date }}</span><br />
+            <span :title="item.low">{{item.low}}</span>~<span :title="item.high">{{ item.high}}</span><br />
+            <h1 :title="item.type">{{ item.type }}</h1>
+            <br />
+            <span :title="item.fengxiang">{{ item.fengxiang }}</span><br />
+            <span :title="item.fengli">{{ item.fengli }}</span>
+          </b>
+        </li>
+      </ul>
+      <span style="color: ghostwhite;"><b>{{ganmao}}</b></span>
+    </div>
+  </body>
+  <script src="./js/layui/layui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/main.js"></script>
+</html>

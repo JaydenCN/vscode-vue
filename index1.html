@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VUE快速入门</title>
+  </head>
+  <style type="text/css">
+    .active {
+      border: 1px solid red;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+  <body>
+    <!-- 使用vue指令的元素必须处于挂载状态 -->
+    <h3>Vue设置文本 v-text 全部识别为文本</h3>
+    <div id="Jayden-vue">
+      <!-- 字符串拼接 -->
+      <!-- 1、可直接在vue指令中拼接 缺点：标签中的内容将被全部替换 -->
+      <h5 v-text="message+'!'"></h5>
+      <!-- 2、模板语法中拼接 -->
+      <h5>提示：{{ message+"!" }}</h5>
+    </div>
+    <h3>Vue设置元素 v-html 可识别标签</h3>
+    <div class="Jayden-vue">
+      <!-- 对比 -->
+      <!-- 全部识别为文本 -->
+      v-text：
+      <p v-text="content" style="display: inline;"></p>
+      <br />
+      <!-- 全部识别为文本 -->
+      模板引擎：
+      <p style="display: inline;">{{ content }}</p>
+      <br />
+      <!-- 可字符串拼接 -->
+      v-html：
+      <p v-html="content" style="display: inline;"></p>
+      <br />
+    </div>
+    <h3>Vue设置绑定事件</h3>
+    <div id="Jayden-vue-on">
+      <input type="button" value="点击事件" v-on:click="show" />
+      <!-- 简写 v-on -> @ -->
+      <input type="button" value="点击事件" @click="show" />
+      <input type="button" value="双击事件" @dblclick="showDb" />
+      <input type="button" value="悬浮事件" @mouseenter="show" />
+      <input type="button" value="动态修改数据" @click="showBlur" />&nbsp;&nbsp;&nbsp;...
+      <p v-text="food"></p>
+    </div>
+    <h3>Vue实现加减</h3>
+    <div id="Jayden-vue-addAndsub">
+      <button @click="sub">-</button>
+      <span> {{ num }} </span>
+      <button @click="add">+</button>
+    </div>
+    <h3>Vue v-show指令</h3>
+    <!-- 操控样式 -->
+    <div class="Jayden-vue-addAndsub">
+      <img v-show="isShow" src="./img/img.jpg" style="width: 100px; height: 100px;" />
+      <button @click="show">显示|隐藏</button>
+      <img v-show="age>=18" src="./img/img.jpg" style="width: 100px; height: 100px;" />
+      <button @click="showAge">age++</button>
+      <button @click="showAgeSub">age--</button>
+    </div>
+    <h3>Vue v-if指令</h3>
+    <!-- 操控dom树 -->
+    <div class="Jayden-vue-if">
+      <p v-if="isShow">我是v-if</p>
+      <button @click="show">显示|隐藏</button>
+      <p v-if="temperature>=40">真热</p>
+    </div>
+    <h3>Vue v-bind指令</h3>
+    <!-- 设置属性 -->
+    <div id="Jayden-vue-bind">
+      <img
+        style="width: 100px; height: 100px;"
+        v-bind:src="imgUrl"
+        v-bind:title="imgTitle"
+        :class="isShow?'active':''"
+        @click="show"
+      />
+      <img
+        style="width: 100px; height: 100px;"
+        v-bind:src="imgUrl"
+        v-bind:title="imgTitle"
+        :class="{active:isShow}"
+        @click="show"
+      />
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript">
+    var app0 = new Vue({
+      el: "#Jayden-vue",
+      data: {
+        message: "你好，Jayden",
+      },
+    });
+    var app1 = new Vue({
+      el: ".Jayden-vue",
+      data: {
+        content: '<a href="http://www.jayden.store/">你好 Jayden!</a>',
+      },
+    });
+    var app2 = new Vue({
+      el: "#Jayden-vue-on",
+      data: {
+        food: "西兰花炒蛋",
+      },
+      /* 绑定事件方法写在methods属性中 */
+      methods: {
+        show: function () {
+          alert("ok!");
+        },
+        showDb: function () {
+          alert("双击完成!");
+        },
+        /* 方法中可通过this关键字访问data中的数据 */
+        showBlur: function () {
+          this.food += "好好吃！";
+        },
+      },
+    });
+    var app3 = new Vue({
+      el: "#Jayden-vue-addAndsub",
+      data: {
+        num: 1,
+      },
+      methods: {
+        add: function () {
+          if (this.num >= 10) {
+            alert("已经最大啦！");
+          } else {
+            this.num++;
+          }
+        },
+        sub: function () {
+          if (this.num <= 0) {
+            alert("已经最小啦！");
+          } else {
+            this.num--;
+          }
+        },
+      },
+    });
+    var app4 = new Vue({
+      el: ".Jayden-vue-addAndsub",
+      data: {
+        isShow: false,
+        age: 16,
+      },
+      methods: {
+        show: function () {
+          this.isShow = !this.isShow;
+        },
+        showAge: function () {
+          this.age++;
+        },
+        showAgeSub: function () {
+          this.age--;
+        },
+      },
+    });
+    var app5 = new Vue({
+      el: ".Jayden-vue-if",
+      data: {
+        isShow: true,
+        temperature: 30,
+      },
+      methods: {
+        show: function () {
+          this.isShow = !this.isShow;
+        },
+      },
+    });
+    var app6 = new Vue({
+      el: "#Jayden-vue-bind",
+      data: {
+        imgUrl: "http://www.jayden.store/images/jaden.jpg",
+        imgTitle: "Jayden",
+        isShow: false,
+      },
+      methods: {
+        show: function () {
+          this.isShow = !this.isShow;
+        },
+      },
+    });
+  </script>
+</html>

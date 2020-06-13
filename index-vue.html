@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="js/layui/css/layui.css" />
+    <title>Jayden-vue</title>
+    <style type="text/css">
+      .active {
+        border: 1px solid red;
+        width: 50px;
+        height: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>实现图片切换</h2>
+    <div class="vue-div">
+      <img :src="fileArr[index]" style="height: 300px; width: 300px;" :title="titleArr[index]" alt="altText" /><br />
+      <a href="javascript:;" @click="prev()" v-show="index!=0">上一张</a>
+      <a href="javascript:;" @click="next()" v-show="index<fileArr.length-1">下一张</a>
+    </div>
+    <h2>v-for 指令</h2>
+    <div id="vue-div">
+      <h5>亚洲颜值代表：</h5>
+      <ul>
+        <li v-for="(item,index) in arr">
+          {{ index+1 }} {{ item }}
+        </li>
+      </ul>
+      <button @click="add()">添加</button>
+      <button @click="remove()">移除</button>
+      <h2 v-for="item in objArr" :title="item.name">
+        {{ item.name }}
+      </h2>
+    </div>
+    <h2>v-on 补充</h2>
+    <div id="on-div">
+      <!-- 只执行一次点击事件 -->
+      <button @click.once="event('老铁', '双击666')">点我呀</button>
+      <!-- 有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法： -->
+      <input type="text" @keyup.enter="SayHi($event.target.value)" />
+    </div>
+    <h2>v-model 指令</h2>
+    <h5>主要用来设置文本框的值和获取文本框的值</h5>
+    <div id="div-model">
+      <input type="text" v-model="something" @keyup.enter="show()" /><br />
+      {{ something }}
+      <button @click="handler()">修改文本</button>
+    </div>
+  </body>
+  <script src="js/layui/layui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var appTwp = new Vue({
+      el: ".vue-div",
+      data() {
+        return {
+          fileArr: ["./img/car1.jpg", "./img/car2.jpg", "./img/car3.jpg", "./img/car4.jpg"],
+          titleArr: ["汽车图片1", "汽车图片2", "汽车图片3", "汽车图片4"],
+          index: 0,
+          isTrue: true,
+        };
+      },
+      methods: {
+        prev() {
+          this.index--;
+        },
+        next() {
+          this.index++;
+        },
+      },
+    });
+    var appOne = new Vue({
+      el: "#vue-div",
+      data() {
+        return {
+          arr: ["彭于晏", "胡歌", "鹿晗", "蔡徐坤", "范浩杰"],
+          objArr: [{ name: "西红柿炒蛋" }, { name: "蛋炒西红柿" }],
+        };
+      },
+      methods: {
+        add() {
+          this.objArr.push({ name: "西兰花炒蛋" });
+        },
+        remove() {
+          this.objArr.shift();
+        },
+      },
+    });
+    var appt = new Vue({
+      el: "#on-div",
+      data() {
+        return {
+          key: value,
+        };
+      },
+      methods: {
+        event(p1, p2) {
+          console.log(p1);
+          console.log(p2);
+        },
+        SayHi(event) {
+          console.log(event);
+          alert(event);
+        },
+      },
+    });
+    var appc = new Vue({
+      el: "#div-model",
+      data() {
+        return {
+          something: "Jayden是帅哥",
+        };
+      },
+      methods: {
+        show() {
+          alert(this.something);
+        },
+        handler() {
+          this.something = "我被修改了";
+        },
+      },
+    });
+  </script>
+</html>

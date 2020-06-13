@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+    <style>
+         .warp{
+          absolute:relative;
+         }
+      .main{
+      width:800px;
+      height:800px;
+      border:1px solid #cccccc;
+      color:red;
+      font-size: 22px;
+
+
+      }
+      .filter{
+      width:800px;
+      height:800px;
+      background-color:black;
+      position:absolute;
+      left:0;
+      top:0;
+      filter:
+                      opacity:0.5;/*其他，透明度50%*/
+                      z-index:99;
+                     display:none;
+      }
+      .close{
+      font-size: 22px;
+      color:red;
+      margin:50px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="warp">
+      <div class="main">
+        <div class="test" onclick="Filter();">弹出遮罩</div>
+      </div>
+      <div id="filter" class="filter">
+        <div class="close" onclick="Close();">关闭</div>
+      </div>
+    </div>
+    <script>
+      var filter = document.getElementById("filter");
+      function Filter() {
+        filter.style.display = "block";
+      }
+
+      function Close() {
+        filter.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

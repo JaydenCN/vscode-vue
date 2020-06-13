@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="js/layui/css/layui.css" />
+    <title>axios-vue</title>
+  </head>
+  <body>
+    <div id="axios" style="text-align: center; padding-top: 20px;">
+      <button @click="handler()" class="layui-btn layui-btn-radius layui-btn-primary">
+        获取笑话</button
+      ><br />
+      <div v-html="message" style="margin-top: 8px;"></div>
+      <!-- <button @click="show()">点击发送POST请求</button> -->
+    </div>
+  </body>
+  <script src="./js/layui/layui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    //   ge方式以？拼接参数  response：服务器响应回调  err：服务器错误回调
+    //   axios.get('?v1=v&v2=v').then(function(response){},function(err){})
+    var app = new Vue({
+      el: "#axios",
+      data() {
+        return {
+          message:
+            "<blockquote class='layui-elem-quote'>点上面的按钮即可加载随机笑话，祝你开心每一天！🌞<br/>更有趣的在这里，传送门👉👉👉<a href='http://www.jayden.store'>Tell Me</a></blockquote>",
+        };
+      },
+      methods: {
+        handler() {
+          var that = this;
+          axios.get("https://autumnfish.cn/api/joke").then(
+            function (response) {
+              that.message += "<blockquote class='layui-elem-quote'>" + response.data + "</blockquote>";
+            },
+            function (err) {
+              console.log(err);
+            }
+          );
+        },
+        show() {
+          axios.post("https://autumnfish.cn/api/user/reg", { username: "Jayden" }).then(
+            function (response) {},
+            function (err) {}
+          );
+        },
+      },
+    });
+
+    //   post方式以键值对
+    //   axios.post('',{v1:v,v2:v}).then(function(response){},function(err){})
+  </script>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="js/layui/css/layui.css" />
+    <title>vue实现记事本</title>
+    <style>
+      #notebook {
+        margin: 0 auto;
+        width: 500px;
+        height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="padding: 20px; background-color: #f2f2f2;" id="notebook" style="margin: 0 auto;">
+      <header>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+          <legend>Jayden记事本</legend>
+        </fieldset>
+        <input
+          class="layui-input layui-input-inline"
+          type="text"
+          v-model="something"
+          placeholder="请输入...(回车保存)"
+          @keyup.enter="show()"
+        />
+      </header>
+      <ul>
+        <li v-for="(item,index) in eventArr">
+          <blockquote class="layui-elem-quote" @mouseenter="displayShow()">
+            <span>{{ index+1 }}.</span>
+            <label>{{ item }}</label>
+            <button class="layui-btn layui-btn-xs layui-btn-primary" style="float: right;" @click="remove(index)">
+              ❌
+            </button>
+          </blockquote>
+        </li>
+      </ul>
+      <span v-show="eventArr.length!=0">共有{{ eventArr.length }}条数据</span>
+      <button
+        class="layui-btn layui-btn-xs layui-btn-primary"
+        style="float: right;"
+        v-show="eventArr.length!=0"
+        @click="removeAll()"
+      >
+        clear
+      </button>
+    </div>
+  </body>
+  <script src="./js/layui/layui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    layui.use("layer", function () {
+      layui.layer.msg("本页面不涉及数据交互，刷新即可初始化", { icon: 1 });
+    });
+    var appW = new Vue({
+      el: "#notebook",
+      data() {
+        return {
+          eventArr: ["明天要去旅游", "后天要去上班", "大后天要陪女朋友"],
+          something: "",
+          isTrue: true,
+        };
+      },
+      methods: {
+        show() {
+          //动态添加
+          this.eventArr.push(this.something);
+        },
+        removeAll() {
+          //移除所有
+          this.eventArr = [];
+        },
+        remove(index) {
+          // 从index开始删除一个
+          this.eventArr.splice(index, 1);
+        },
+        displayShow() {
+          this.isTrue = !this.isTrue;
+        },
+      },
+    });
+  </script>
+</html>
