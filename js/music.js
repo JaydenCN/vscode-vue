@@ -52,10 +52,37 @@ layui.use(["layer", "element", "form"], function () {
           layer.msg("请输入内容！", { icon: 2 });
           return;
         }
+        //export default
+        function to(promise) {
+          return promise
+            .then((data) => {
+              return [null, data];
+            })
+            .catch((err) => {
+              return [err, null];
+            });
+        }
+        async function showAsync() {
+          // async+promise+* yield 处理异步
+
+          //这里用到to函数做错误处理，可以使程序发生错误也不崩溃，继续执行下面的代码
+          let [err, musicListAsync] = await to(axios.get("https://xxxxx?keywords=" + this.keywords));
+          if (err == null) {
+            console.log(musicListAsync); //"没有错误"
+          } else {
+            console.log(err);
+          }
+          let [errT, musicListAsyncT] = await to(axios.get("https://autumnfish.cn/search?keywords=" + this.keywords));
+          if (errT == null) {
+            console.log(musicListAsync); //"没有错误"
+          } else {
+            console.log(err);
+          }
+        }
+        showAsync();
         axios
           .get("https://autumnfish.cn/search?keywords=" + this.keywords)
           .then((res) => {
-            console.log(res.data.result.songs);
             res.data.result.songs.forEach((element) => {
               if (element.name.length > 4) {
                 element.name = element.name.substring(0, 4) + "...";
